@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Traffic Prediction</title>
+</head>
+<body>
+  <h2>Traffic Volume Prediction</h2>
+  <form action="/predict" method="post">
+    vehicles volume now: <input type="number" name="lag1" required><br>
+    vehicle volume past hour(vehicles an hour ago): <input type="number" name="lag2" required><br>
+    <button type="submit">Predict</button>
+  </form>
+
+  <h3>Prediction Result:</h3>
+  <div class="result">
+{{prediction_text}}
+</div>
+
+</body>
+</html>
