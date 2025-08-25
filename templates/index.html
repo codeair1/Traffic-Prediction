@@ -1,20 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Traffic Prediction</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Traffic Volume Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px auto;
+      max-width: 450px;
+      padding: 0 15px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0077cc;
+    }
+    form {
+      background: #fff;
+      border-radius: 6px;
+      padding: 20px 25px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #0077cc;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 5px;
+      padding: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .result {
+      padding: 15px;
+      background-color: #e1f5fe;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.2rem;
+      min-height: 40px;
+    }
+    #currentTime {
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 20px;
+      color: #555;
+      font-size: 1rem;
+      font-family: "Courier New", Courier, monospace;
+    }
+  </style>
 </head>
 <body>
+
   <h2>Traffic Volume Prediction</h2>
+
+  <div id="currentTime">
+    Loading current time...
+  </div>
+
   <form action="/predict" method="post">
-    vehicles volume now: <input type="number" name="lag1" required><br>
-    vehicle volume past hour(vehicles an hour ago): <input type="number" name="lag2" required><br>
+    <label for="lag1">Vehicles volume now:</label>
+    <input type="number" id="lag1" name="lag1" required min="0" />
+
+    <label for="lag2">Vehicle volume past hour (vehicles an hour ago):</label>
+    <input type="number" id="lag2" name="lag2" required min="0" />
+
     <button type="submit">Predict</button>
   </form>
 
   <h3>Prediction Result:</h3>
   <div class="result">
-{{prediction_text}}
-</div>
+    {{prediction_text}}
+  </div>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const timeString = now.toLocaleTimeString(undefined, options);
+      document.getElementById('currentTime').textContent = `Current time and day: ${timeString}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
 
 </body>
 </html>
